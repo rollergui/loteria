@@ -7,5 +7,7 @@ defmodule LoteriaWeb.Router do
 
   scope "/api", LoteriaWeb do
     pipe_through :api
+
+    resources "/users", UserController, except: [:new, :edit]
   end
 end
