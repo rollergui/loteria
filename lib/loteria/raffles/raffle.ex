@@ -3,7 +3,7 @@ defmodule Loteria.Raffles.Raffle do
   import Ecto.Changeset
 
   schema "raffles" do
-    field :draw_date, :date
+    field :draw_date, :utc_datetime
     field :name, :string
     many_to_many :users, Loteria.Users.User, join_through: Loteria.Raffles.RafflesUsers
 
