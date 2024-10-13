@@ -6,6 +6,7 @@ defmodule Loteria.Raffles do
   import Ecto.Query, warn: false
   alias Loteria.Repo
 
+  alias Loteria.Users
   alias Loteria.Raffles.Raffle
 
   @doc """
@@ -100,5 +101,13 @@ defmodule Loteria.Raffles do
   """
   def change_raffle(%Raffle{} = raffle, attrs \\ %{}) do
     Raffle.changeset(raffle, attrs)
+  end
+
+  def add_user(raffle_id, user_id) do
+    user = Users.get_user!(user_id)
+
+    Repo.get!(Raffle, raffle_id) |> Repo.preload(:users)
+    |> Raffle.add_user_changeset(user)
+    |> Repo.update()
   end
 end

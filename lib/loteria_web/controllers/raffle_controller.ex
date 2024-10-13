@@ -40,4 +40,9 @@ defmodule LoteriaWeb.RaffleController do
       send_resp(conn, :no_content, "")
     end
   end
+
+  def join(conn, %{"id" => id, "user_id" => user_id}) do
+    Raffles.add_user(id, user_id)
+    send_resp(conn, :ok, "")
+  end
 end
