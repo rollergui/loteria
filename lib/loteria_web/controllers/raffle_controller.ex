@@ -42,7 +42,9 @@ defmodule LoteriaWeb.RaffleController do
   end
 
   def join(conn, %{"id" => id, "user_id" => user_id}) do
-    Raffles.add_user(id, user_id)
-    send_resp(conn, :ok, "")
+    case Raffles.add_user(id, user_id) do
+      {:ok, _} -> send_resp(conn, :ok, "")
+      {:error, :raffle_closed} -> put_status(conn, 412) |> render(:error, message: "Esse sorteio já foi encerrado")
+    end
   end
 end

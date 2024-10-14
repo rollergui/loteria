@@ -104,10 +104,18 @@ defmodule Loteria.Raffles do
   end
 
   def add_user(raffle_id, user_id) do
-    user = Users.get_user!(user_id)
-
-    Repo.get!(Raffle, raffle_id) |> Repo.preload(:users)
-    |> Raffle.add_user_changeset(user)
-    |> Repo.update()
+    raffle = Repo.get(Raffle, raffle_id)
+    if ongoing_raffle?(raffle) do
+      user = Users.get_user!(user_id)
+      Repo.get!(Raffle, raffle_id)
+      |> Repo.preload(:users)
+      |> Raffle.add_user_changeset(user)
+      |> Repo.update()
+    else
+      {:error, :raffle_closed}
+    end
   end
+
+  defp ongoing_raffle?(%{winner: winner}) when not is_nil(winner), do: false
+  defp ongoing_raffle?(%{draw_date: draw_date}), do: DateTime.diff(draw_date, DateTime.utc_now(), :minute) >= 0
 end
