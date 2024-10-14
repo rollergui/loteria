@@ -2,6 +2,7 @@
 
 To start your Phoenix server:
 
+	* Get postgres up and running (e.g. `docker run --name some-postgres -p 5432:5432 -e POSTGRES_PASSWORD=postgres -d postgres`)
   * Run `mix setup` to install and setup dependencies
   * Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`
 
