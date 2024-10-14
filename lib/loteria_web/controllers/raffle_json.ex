@@ -15,6 +15,10 @@ defmodule LoteriaWeb.RaffleJSON do
     %{data: data(raffle)}
   end
 
+  def result(%{user: user}) do
+    LoteriaWeb.UserJSON.show(%{user: user})
+  end
+
   def error(%{message: message}), do: %{error: message}
 
   defp data(%Raffle{} = raffle) do

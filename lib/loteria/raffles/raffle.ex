@@ -23,4 +23,10 @@ defmodule Loteria.Raffles.Raffle do
     |> change()
     |> put_assoc(:users, [user|raffle.users])
   end
+
+  def set_winner_changeset(raffle) do
+    raffle
+    |> change()
+    |> put_change(:winner, Enum.random(raffle.users).id)
+  end
 end

@@ -47,4 +47,11 @@ defmodule LoteriaWeb.RaffleController do
       {:error, :raffle_closed} -> put_status(conn, 412) |> render(:error, message: "Esse sorteio já foi encerrado")
     end
   end
+
+  def result(conn, %{"id" => id}) do
+    case Raffles.get_result(id) do
+      {:error, :raffle_open} -> put_status(conn, 412) |> render(:error, message: "Esse sorteio ainda está em andamento")
+      {:ok, user} -> render(conn, :result, user: user)
+    end
+  end
 end

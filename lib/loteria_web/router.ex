@@ -11,5 +11,6 @@ defmodule LoteriaWeb.Router do
     resources "/users", UserController, except: [:new, :edit]
     resources "/raffles", RaffleController, except: [:new, :edit]
     post "/raffles/:id/join", RaffleController, :join
+    get "/raffles/:id/result", RaffleController, :result
   end
 end
